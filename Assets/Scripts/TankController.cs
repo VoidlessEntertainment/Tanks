@@ -5,18 +5,20 @@ using UnityEngine;
 public class TankController : MonoBehaviour
 {
 
-	public TankTurret_Pivot Pivot;
-	
-	private void Awake()
-	{
+	private TankTurret_Pivot pivot;
 
+	void Awake()
+	{
+		pivot = GetComponent<TankTurret_Pivot>();
 	}
-	
-	void Start () {
-		
+
+	void Update()
+	{
+		HandleInput();
 	}
-	
-	void Update () {
+
+	void HandleInput()
+	{
 		if (Input.GetKey(KeyCode.W))
 		{
 			transform.Translate(Vector3.forward);
@@ -35,13 +37,21 @@ public class TankController : MonoBehaviour
 		}
 		if (Input.GetKey(KeyCode.LeftArrow))
 		{
-			Pivot.transform.Rotate(Vector3.down);
+			pivot.transform.Rotate(Vector3.down);
 		}
 		if (Input.GetKey(KeyCode.RightArrow))
 		{
-			Pivot.transform.Rotate(Vector3.up);
+			pivot.transform.Rotate(Vector3.up);
+		}
+		if (Input.GetKey(KeyCode.Space))
+		{
+			Fire();
 		}
 	}
 
+	void Fire()
+	{
+		
+	}
 
 }

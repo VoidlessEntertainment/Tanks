@@ -1,74 +1,90 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
 
-	public GameObject bulletPrefab;
-	private Transform pivot;
-	private Transform tip;
-	private GameObject burst;
-	public float tankSpeed;
+	public GameObject BulletPrefab;
+	public float MovementSpeed;
+	public float ShootCooldown;
+	public float ShootCooldownReset;
+	
+	private Transform _pivot;
+	private Transform _tip;
+	private GameObject _burst;
 
-	void Awake()
+	private void Awake()
 	{
-		pivot = transform.Find("PivotPoint");
-		tip = transform.Find("PivotPoint").Find("TipPoint");
-		burst = transform.Find("PivotPoint").Find("TipPoint").Find("MuzzleBurst").gameObject;
-		burst.SetActive(false);
-		tankSpeed = 25F;
+		_pivot = transform.Find("PivotPoint");
+		_tip = transform.Find("PivotPoint").Find("TipPoint");
+		_burst = transform.Find("PivotPoint").Find("TipPoint").Find("MuzzleBurst").gameObject;
+		_burst.SetActive(false);
+		MovementSpeed = 25f;
+		ShootCooldown = 0;
+		ShootCooldownReset = 1f;
 	}
 	
-	void Update()
+	private void Update()
 	{
 		HandleInput();
+		Cooldown();
 	}
 
-	void HandleInput()
+	private void HandleInput()
 	{
 		if (Input.GetKey(KeyCode.W))
 		{
-			transform.Translate(Vector3.forward * Time.deltaTime * tankSpeed);
+			transform.Translate(Vector3.forward * Time.deltaTime * MovementSpeed);
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
-			transform.Translate(Vector3.back * Time.deltaTime * tankSpeed);
+			transform.Translate(Vector3.back * Time.deltaTime * MovementSpeed);
 		}
 		if (Input.GetKey(KeyCode.A))
 		{
-			transform.Rotate(Vector3.down * Time.deltaTime * tankSpeed * 2);
+			transform.Rotate(Vector3.down * Time.deltaTime * MovementSpeed * 2);
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
-			transform.Rotate(Vector3.up * Time.deltaTime * tankSpeed * 2);
+			transform.Rotate(Vector3.up * Time.deltaTime * MovementSpeed * 2);
 		}
 		if (Input.GetKey(KeyCode.Q))
 		{
-			pivot.Rotate(Vector3.down * Time.deltaTime * tankSpeed * 3);
+			_pivot.Rotate(Vector3.down * Time.deltaTime * MovementSpeed * 3);
 		}
 		if (Input.GetKey(KeyCode.E))
 		{
-			pivot.Rotate(Vector3.up * Time.deltaTime * tankSpeed * 3);
+			_pivot.Rotate(Vector3.up * Time.deltaTime * MovementSpeed * 3);
 		}
-		if (Input.GetKey(KeyCode.Space))
+		if (Input.GetKey(KeyCode.Space) && ShootCooldown <= 0)
 		{
 			Shoot();
 		}
 	}
 
-	void Shoot()
+	private void Cooldown()
 	{
-		GameObject bullet = Instantiate(bulletPrefab, tip.position, Quaternion.identity) as GameObject;
-		bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 30);
-		burst.SetActive(true);
-		Invoke("hideBurst", 0.2f);
-		
+		if (ShootCooldown > 0)
+		{
+			ShootCooldown -= Time.deltaTime;
+		}
+		else
+		{
+			ShootCooldown = 0;
+		}
 	}
 
-	void hideBurst()
+	private void Shoot()
 	{
-		burst.SetActive(false);
+		var bullet = Instantiate(BulletPrefab, _tip.position, _tip.rotation);
+		bullet.GetComponent<Rigidbody>().velocity = (_tip.forward * 20) + new Vector3(0, 5f, 0);
+		_burst.SetActive(true);
+		Invoke("hideBurst", 0.2f);
+		ShootCooldown = ShootCooldownReset;
+	}
+
+	private void hideBurst()
+	{
+		_burst.SetActive(false);
 	}
 
 }

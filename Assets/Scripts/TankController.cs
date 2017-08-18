@@ -9,13 +9,7 @@ public class TankController : MonoBehaviour
 	private Transform pivot;
 	private Transform tip;
 	private GameObject burst;
-	private int 
-	
-
-	void Update()
-	{
-		HandleInput();
-	}
+	public float tankSpeed;
 
 	void Awake()
 	{
@@ -23,41 +17,47 @@ public class TankController : MonoBehaviour
 		tip = transform.Find("PivotPoint").Find("TipPoint");
 		burst = transform.Find("PivotPoint").Find("TipPoint").Find("MuzzleBurst").gameObject;
 		burst.SetActive(false);
+		tankSpeed = 25F;
+	}
+	
+	void Update()
+	{
+		HandleInput();
 	}
 
 	void HandleInput()
 	{
 		if (Input.GetKey(KeyCode.W))
 		{
-			transform.Translate(Vector3.forward);
+			transform.Translate(Vector3.forward * Time.deltaTime * tankSpeed);
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
-			transform.Translate(Vector3.back);
+			transform.Translate(Vector3.back * Time.deltaTime * tankSpeed);
 		}
 		if (Input.GetKey(KeyCode.A))
 		{
-			transform.Rotate(Vector3.down);
+			transform.Rotate(Vector3.down * Time.deltaTime * tankSpeed * 2);
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
-			transform.Rotate(Vector3.up);
+			transform.Rotate(Vector3.up * Time.deltaTime * tankSpeed * 2);
 		}
-		if (Input.GetKey(KeyCode.LeftArrow))
+		if (Input.GetKey(KeyCode.Q))
 		{
-			pivot.Rotate(Vector3.down);
+			pivot.Rotate(Vector3.down * Time.deltaTime * tankSpeed * 3);
 		}
-		if (Input.GetKey(KeyCode.RightArrow))
+		if (Input.GetKey(KeyCode.E))
 		{
-			pivot.Rotate(Vector3.up);
+			pivot.Rotate(Vector3.up * Time.deltaTime * tankSpeed * 3);
 		}
 		if (Input.GetKey(KeyCode.Space))
 		{
-			Fire();
+			Shoot();
 		}
 	}
 
-	void Fire()
+	void Shoot()
 	{
 		GameObject bullet = Instantiate(bulletPrefab, tip.position, Quaternion.identity) as GameObject;
 		bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 30);

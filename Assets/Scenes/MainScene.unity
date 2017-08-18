@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641305, b: 0.57481575, a: 1}
+  m_IndirectSpecularColor: {r: 0.45140058, g: 0.5008928, b: 0.5723174, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b58f9eb8001ef5349886d8ee69131403, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b58f9eb8001ef5349886d8ee69131403, type: 3}
       propertyPath: m_LocalRotation.x
@@ -271,6 +271,10 @@ Prefab:
     - target: {fileID: 100000, guid: b58f9eb8001ef5349886d8ee69131403, type: 3}
       propertyPath: m_Name
       value: MuzzleBurst
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b58f9eb8001ef5349886d8ee69131403, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b58f9eb8001ef5349886d8ee69131403, type: 3}
@@ -333,8 +337,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1299c7b02151faf439ae617011bc7b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1998228576671088, guid: 9f1ce21c66649ee45bab76cc46925e78,
-    type: 2}
+  BulletPrefab: {fileID: 0}
+  MovementSpeed: 0
+  ShootCooldown: 0
+  ShootCooldownReset: 0
 --- !u!54 &806929088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -437,13 +443,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 819379377}
-  m_LocalRotation: {x: 0.50900817, y: 0.18526386, z: 0.18526386, w: 0.8199179}
-  m_LocalPosition: {x: -100, y: 25, z: -100}
+  m_LocalRotation: {x: 0.30618626, y: 0.1767767, z: 0.1767767, w: 0.91855866}
+  m_LocalPosition: {x: -50, y: 25, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: 50, z: 50}
+  m_LocalEulerAnglesHint: {x: 30, y: 30, z: 30}
 --- !u!1001 &1225704509
 Prefab:
   m_ObjectHideFlags: 0
@@ -645,7 +651,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2014041850}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1610458062}

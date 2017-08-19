@@ -32,33 +32,25 @@ public class TankController : MonoBehaviour
 	private void HandleInput()
 	{
 		if (Input.GetKey(KeyCode.W))
-		{
 			transform.Translate(Vector3.forward * Time.deltaTime * MovementSpeed);
-		}
+		
 		if (Input.GetKey(KeyCode.S))
-		{
 			transform.Translate(Vector3.back * Time.deltaTime * MovementSpeed);
-		}
+		
 		if (Input.GetKey(KeyCode.A))
-		{
-			transform.Rotate(Vector3.down * Time.deltaTime * MovementSpeed * 2);
-		}
+			transform.Rotate(Vector3.down * Time.deltaTime * MovementSpeed * 3);
+		
 		if (Input.GetKey(KeyCode.D))
-		{
-			transform.Rotate(Vector3.up * Time.deltaTime * MovementSpeed * 2);
-		}
-		if (Input.GetKey(KeyCode.Q))
-		{
+			transform.Rotate(Vector3.up * Time.deltaTime * MovementSpeed * 3);
+		
+		if (Input.GetKey(KeyCode.LeftArrow))
 			_pivot.Rotate(Vector3.down * Time.deltaTime * MovementSpeed * 3);
-		}
-		if (Input.GetKey(KeyCode.E))
-		{
+		
+		if (Input.GetKey(KeyCode.RightArrow))
 			_pivot.Rotate(Vector3.up * Time.deltaTime * MovementSpeed * 3);
-		}
+		
 		if (Input.GetKey(KeyCode.Space) && ShootCooldown <= 0)
-		{
 			Shoot();
-		}
 	}
 
 	private void Cooldown()
@@ -76,13 +68,13 @@ public class TankController : MonoBehaviour
 	private void Shoot()
 	{
 		var bullet = Instantiate(BulletPrefab, _tip.position, _tip.rotation);
-		bullet.GetComponent<Rigidbody>().velocity = (_tip.forward * 20) + new Vector3(0, 5f, 0);
+		bullet.GetComponent<Rigidbody>().velocity = _tip.forward * 20 + new Vector3(0, 5f, 0);
 		_burst.SetActive(true);
-		Invoke("hideBurst", 0.2f);
+		Invoke("HideBurst", 0.2f);
 		ShootCooldown = ShootCooldownReset;
 	}
 
-	private void hideBurst()
+	private void HideBurst()
 	{
 		_burst.SetActive(false);
 	}
